@@ -1,3 +1,5 @@
+import { useState, useEffect } from "react";
+import Users from './Users.jsx'
 
 
 
@@ -12,13 +14,16 @@ function App() {
     // 5. Pass down the users state into the Users component, loop through it, and render UserItem components
     // 6. Add event listeners to each UserItem, that when clicked will console.log() that UserItems unique ID
 
-
-
-  return (
-    <div className="container">
-      <h1>See instructions commented out in App.jsx!</h1>
-    </div>
-  )
+const [users,setUsers] = useState([]);
+useEffect(() => {
+  const getData = async () => {
+    const res = await fetch('https://jsonplaceholder.typicode.com/users');
+    const data = await res.json()
+    setUsers(data);
+  }
+  getData();
+}, []);
+return <Users users={users}/>
 }
 
 export default App
